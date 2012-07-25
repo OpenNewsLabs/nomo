@@ -37,7 +37,8 @@ function getStory(url){
       res.on('end', function () {
         simplexml.parse(body, function(e, p) {
           var newstr = p.body.title.replace("’", "");
-          scrape(newstr, url.replace("xml.", "www."));
+          var noHyphenString = newstr.replace("–", "-");
+          scrape(noHyphenString, url.replace("xml.", "www."));
         });
       });
     }
