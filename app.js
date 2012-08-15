@@ -4,13 +4,13 @@ var simplexml = require('xml-simple');
 var publicApi = [];
 
 function scrape(title, url){
-  var amoUrl = 'http://d:1337/?q=' + url
+  var amoUrl = 'http://localhost:1337/?q=' + url
   request(amoUrl, function (err, res, body){
     if(body !== undefined){
       var obj = JSON.parse(body);
       obj.title = title;
       obj.url = url;
-      console.log(obj);
+      //console.log(obj);
       publicApi.push(obj);
     }
   });
@@ -38,7 +38,9 @@ function getStory(url){
         simplexml.parse(body, function(e, p) {
           var newstr = p.body.title.replace("’", "");
           var noHyphenString = newstr.replace("–", "-");
-          scrape(noHyphenString, url.replace("xml.", "www."));
+          var noSlash = noHyphenString.replace("“", '"');
+          console.log(noSlash)
+          scrape(noSlash, url.replace("xml.", "www."));
         });
       });
     }
